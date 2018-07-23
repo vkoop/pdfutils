@@ -33,4 +33,6 @@ jar {
     // and adds them to the JAR itself. One can extend this task, to skip certain
     // files or particular types at will
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+
+    archiveName = 'pdfmerge.jar'
 }
