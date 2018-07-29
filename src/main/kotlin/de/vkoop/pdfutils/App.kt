@@ -15,84 +15,52 @@ enum class MergeMode {
 }
 
 @CommandLine.Command
-class PdfMerge :  Runnable{
+class PdfMerge : Runnable {
 
     @CommandLine.Parameters(index = "0")
-    lateinit var file1 : String;
+    lateinit var file1: String;
 
     @CommandLine.Option(names = ["-r1"], description = ["first file should be reversed"])
-    var reverseFile1 =  false
+    var reverseFile1 = false
 
     @CommandLine.Parameters(index = "1")
-    lateinit var file2 : String;
+    lateinit var file2: String;
 
     @CommandLine.Option(names = ["-r2"], description = ["second file should be reversed"])
-    var reverseFile2 =  false
+    var reverseFile2 = false
 
     @CommandLine.Option(names = ["-m"], description = ["INTERLEAVE / CONCAT"])
     var mergeMode = MergeMode.CONCAT;
 
     @CommandLine.Option(names = ["-o"], required = true)
-    lateinit var outFile : String;
+    lateinit var outFile: String;
 
-    fun  concat(){
-        val pdfReader1 = PdfReader(file1)
-        val pdfReader2 = PdfReader(file2)
-
-        val outDocument = Document()
-        val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
-        outDocument.open()
-
-        for(i in 1 .. pdfReader1.numberOfPages){
-            smartCopy.addPage(smartCopy.getImportedPage(pdfReader1, i))
-        }
-
-        for(i in 1 .. pdfReader2.numberOfPages){
-            smartCopy.addPage(smartCopy.getImportedPage(pdfReader2, i))
-        }
-
-        pdfReader1.close()
-        pdfReader2.close()
-        smartCopy.close()
-    }
-
-    fun interleave(){
-        val pdfReader1 = PdfReader(file1)
-        val pdfReader2 = PdfReader(file2)
-
-        val numberOfPages1 = pdfReader1.numberOfPages
-        val numberOfPages2 = pdfReader2.numberOfPages
+    fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
+        val pageOrderList = combineFun(createPageReaderList(file1, reverseFile1), createPageReaderList(file2, reverseFile2))
 
         val outDocument = Document()
         val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
 
         outDocument.open()
 
-        var finished = false
-        var i = 1
-        while (!finished) {
-            val nextPage1 = if(reverseFile1) (numberOfPages1 - (i-1)) else i
-            val nextPage2 = if(reverseFile2) (numberOfPages2 - (i-1)) else i
+        pageOrderList.map { (page, reader) -> smartCopy.getImportedPage(reader, page) }
+                .forEach { smartCopy.addPage(it) }
 
-            smartCopy.addPage(smartCopy.getImportedPage(pdfReader1,  nextPage1))
-            smartCopy.addPage(smartCopy.getImportedPage(pdfReader2, nextPage2))
-
-            i++
-            if(i > numberOfPages1 || i > numberOfPages2){
-                finished = true
-            }
-        }
-
-        pdfReader1.close()
-        pdfReader2.close()
         smartCopy.close()
     }
 
-    override fun run(){
-        if(mergeMode == MergeMode.CONCAT){
-            concat();
-        } else if(mergeMode == MergeMode.INTERLEAVE) {
-            interleave()
+    private fun createPageReaderList(fileName: String, reversed: Boolean): List<Pair<Int, PdfReader>> {
+        val pdfReader = PdfReader(fileName)
+        val numberOfPages = pdfReader.numberOfPages
+        val range = if (reversed) (numberOfPages downTo 1) else (1..numberOfPages)
+        return range.map { Pair(it, pdfReader) }
+    }
+
+    override fun run() {
+        if (mergeMode == MergeMode.CONCAT) {
+            combine { l1, l2 -> l1 + l2 }
+        } else if (mergeMode == MergeMode.INTERLEAVE) {
+            combine { l1, l2 -> l1.zip(l2).flatMap { it.toList() } }
         } else {
             println("Unknown mergen mode.")
         }
