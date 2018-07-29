@@ -10,6 +10,10 @@ fun main(args: Array<String>) {
     CommandLine.run(PdfMerge(), System.out, *args)
 }
 
+enum class MergeMode {
+    INTERLEAVE, CONCAT
+}
+
 @CommandLine.Command
 class PdfMerge :  Runnable{
 
@@ -25,10 +29,34 @@ class PdfMerge :  Runnable{
     @CommandLine.Option(names = ["-r2"], description = ["second file should be reversed"])
     var reverseFile2 =  false
 
+    @CommandLine.Option(names = ["-m"], description = ["INTERLEAVE / CONCAT"])
+    var mergeMode = MergeMode.CONCAT;
+
     @CommandLine.Option(names = ["-o"], required = true)
     lateinit var outFile : String;
 
-    override fun run(){
+    fun  concat(){
+        val pdfReader1 = PdfReader(file1)
+        val pdfReader2 = PdfReader(file2)
+
+        val outDocument = Document()
+        val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
+        outDocument.open()
+
+        for(i in 1 .. pdfReader1.numberOfPages){
+            smartCopy.addPage(smartCopy.getImportedPage(pdfReader1, i))
+        }
+
+        for(i in 1 .. pdfReader2.numberOfPages){
+            smartCopy.addPage(smartCopy.getImportedPage(pdfReader2, i))
+        }
+
+        pdfReader1.close()
+        pdfReader2.close()
+        smartCopy.close()
+    }
+
+    fun interleave(){
         val pdfReader1 = PdfReader(file1)
         val pdfReader2 = PdfReader(file2)
 
@@ -58,5 +86,15 @@ class PdfMerge :  Runnable{
         pdfReader1.close()
         pdfReader2.close()
         smartCopy.close()
+    }
+
+    override fun run(){
+        if(mergeMode == MergeMode.CONCAT){
+            concat();
+        } else if(mergeMode == MergeMode.INTERLEAVE) {
+            interleave()
+        } else {
+            println("Unknown mergen mode.")
+        }
     }
 }
