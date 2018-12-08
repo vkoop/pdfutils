@@ -18,22 +18,22 @@ enum class MergeMode {
 class PdfMerge : Runnable {
 
     @CommandLine.Parameters(index = "0")
-    lateinit var file1: String;
+    lateinit var file1: String
 
     @CommandLine.Option(names = ["-r1"], description = ["first file should be reversed"])
     var reverseFile1 = false
 
     @CommandLine.Parameters(index = "1")
-    lateinit var file2: String;
+    lateinit var file2: String
 
     @CommandLine.Option(names = ["-r2"], description = ["second file should be reversed"])
     var reverseFile2 = false
 
     @CommandLine.Option(names = ["-m"], description = ["INTERLEAVE / CONCAT"])
-    var mergeMode = MergeMode.CONCAT;
+    var mergeMode = MergeMode.CONCAT
 
     @CommandLine.Option(names = ["-o"], required = true)
-    lateinit var outFile: String;
+    lateinit var outFile: String
 
     fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
         val pageOrderList = combineFun(createPageReaderList(file1, reverseFile1), createPageReaderList(file2, reverseFile2))
