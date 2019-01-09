@@ -41,11 +41,12 @@ class PdfMerge : Runnable {
 
         val outDocument = Document()
         val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
+        smartCopy.compressionLevel = 9
 
         outDocument.open()
 
         pageOrderList.map { (page, reader) -> smartCopy.getImportedPage(reader, page) }
-                .forEach { smartCopy.addPage(it) }
+                .forEach (smartCopy::addPage)
 
         smartCopy.close()
     }
