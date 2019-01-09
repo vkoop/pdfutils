@@ -4,6 +4,7 @@ import com.lowagie.text.Document
 import com.lowagie.text.pdf.PdfReader
 import com.lowagie.text.pdf.PdfSmartCopy
 import picocli.CommandLine
+import picocli.CommandLine.*
 import java.io.FileOutputStream
 
 fun main(args: Array<String>) {
@@ -14,25 +15,25 @@ enum class MergeMode {
     INTERLEAVE, CONCAT
 }
 
-@CommandLine.Command
+@Command
 class PdfMerge : Runnable {
 
-    @CommandLine.Parameters(index = "0")
+    @Parameters(index = "0")
     lateinit var file1: String
 
-    @CommandLine.Option(names = ["-r1"], description = ["first file should be reversed"])
+    @Option(names = ["-r1"], description = ["first file should be reversed"])
     var reverseFile1 = false
 
-    @CommandLine.Parameters(index = "1")
+    @Parameters(index = "1")
     lateinit var file2: String
 
-    @CommandLine.Option(names = ["-r2"], description = ["second file should be reversed"])
+    @Option(names = ["-r2"], description = ["second file should be reversed"])
     var reverseFile2 = false
 
-    @CommandLine.Option(names = ["-m"], description = ["INTERLEAVE / CONCAT"])
+    @Option(names = ["-m"], description = ["INTERLEAVE / CONCAT"])
     var mergeMode = MergeMode.CONCAT
 
-    @CommandLine.Option(names = ["-o"], required = true)
+    @Option(names = ["-o"], required = true)
     lateinit var outFile: String
 
     fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
