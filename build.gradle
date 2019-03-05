@@ -14,7 +14,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
     compile group: 'com.github.librepdf', name: 'openpdf', version: '1.2.7'
-    compile 'info.picocli:picocli:3.3.0'
+    compile 'info.picocli:picocli:3.9.5'
 
 }
 
