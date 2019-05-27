@@ -59,12 +59,9 @@ class PdfMerge : Runnable {
     }
 
     override fun run() {
-        if (mergeMode == MergeMode.CONCAT) {
-            combine { l1, l2 -> l1 + l2 }
-        } else if (mergeMode == MergeMode.INTERLEAVE) {
-            combine { l1, l2 -> l1.zip(l2).flatMap { it.toList() } }
-        } else {
-            println("Unknown mergen mode.")
+        when (mergeMode) {
+            MergeMode.CONCAT -> combine { l1, l2 -> l1 + l2 }
+            MergeMode.INTERLEAVE -> combine { l1, l2 -> l1.zip(l2).flatMap { it.toList() } }
         }
     }
 }
