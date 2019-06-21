@@ -36,7 +36,7 @@ class PdfMerge : Runnable {
     @Option(names = ["-o"], required = true)
     lateinit var outFile: String
 
-    fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
+    private fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
         val pageOrderList = combineFun(createPageReaderList(file1, reverseFile1), createPageReaderList(file2, reverseFile2))
 
         val outDocument = Document()
