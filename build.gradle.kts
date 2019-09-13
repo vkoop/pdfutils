@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.3.40"
+    val kotlinVersion = "1.3.50"
 
     id("application")
 
@@ -15,12 +15,13 @@ repositories {
     mavenCentral()
 }
 
+
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     compile("com.github.librepdf:openpdf:1.2.20")
     compile("info.picocli:picocli:3.9.6")
-
 }
 
 tasks.withType<KotlinCompile> {
