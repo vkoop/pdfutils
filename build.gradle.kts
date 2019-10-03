@@ -21,7 +21,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     compile("com.github.librepdf:openpdf:1.3.11")
-    compile("info.picocli:picocli:3.9.6")
+    compile("info.picocli:picocli:4.0.4")
 }
 
 tasks.withType<KotlinCompile> {
