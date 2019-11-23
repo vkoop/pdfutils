@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.3.50"
+    val kotlinVersion = "1.3.60"
 
     id("application")
 
