@@ -20,8 +20,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    compile("com.github.librepdf:openpdf:1.3.11")
-    compile("info.picocli:picocli:4.0.4")
+    compile("com.github.librepdf:openpdf:1.3.12")
+    compile("info.picocli:picocli:4.1.4")
 }
 
 tasks.withType<KotlinCompile> {
