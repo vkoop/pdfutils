@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.3.71"
+    val kotlinVersion = "1.3.72"
 
     id("application")
 
     kotlin("jvm") version kotlinVersion
+
+    id("com.github.ben-manes.versions") version "0.28.0"
 }
 
 group = "de.vkoop"
@@ -20,8 +22,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("com.github.librepdf:openpdf:1.3.12")
-    implementation("info.picocli:picocli:4.1.4")
+    implementation("com.github.librepdf:openpdf:1.3.19")
+    implementation("info.picocli:picocli:4.3.2")
 }
 
 tasks.withType<KotlinCompile> {
