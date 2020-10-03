@@ -16,7 +16,7 @@ enum class MergeMode {
 
 @Command
 class PdfMerge : Runnable {
-  asdfasdf
+
     @Parameters(index = "0")
     lateinit var file1: String
 
