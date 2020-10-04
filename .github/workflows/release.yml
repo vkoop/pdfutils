@@ -33,3 +33,4 @@ jobs:
           asset_path: ./build/distributions/pdfutils*.zip
           asset_name: my-artifact.zip
           asset_content_type: application/zip
+          file_glob: true
