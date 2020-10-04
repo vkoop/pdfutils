@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "de.vkoop"
-version = "1.0.4"
+version = "v1.0.9"
 
 repositories {
     mavenCentral()
