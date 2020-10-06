@@ -17,7 +17,11 @@ repositories {
     mavenCentral()
 }
 
-
+distributions {
+    main {
+        version = ""
+    }
+}
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
