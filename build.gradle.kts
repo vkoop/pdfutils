@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.4.30"
+    val kotlinVersion = "1.5.0"
 
     id("application")
 
     kotlin("jvm") version kotlinVersion
 
-    id("com.github.ben-manes.versions") version "0.36.0"
+    id("com.github.ben-manes.versions") version "0.38.0"
 }
 
 group = "de.vkoop"
@@ -31,7 +31,10 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 application {
