@@ -38,5 +38,5 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    mainClassName = "de.vkoop.pdfutils.AppKt"
+    mainClass.set( "de.vkoop.pdfutils.AppKt")
 }
