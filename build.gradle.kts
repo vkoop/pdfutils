@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     val kotlinVersion = "1.8.10"
 
@@ -30,11 +28,10 @@ dependencies {
     implementation("info.picocli:picocli:4.7.1")
 }
 
-tasks.withType<KotlinCompile> {
+kotlin {
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    // For example:
+    jvmToolchain(8)
 }
 
 application {
