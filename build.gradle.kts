@@ -40,3 +40,8 @@ tasks.withType<KotlinCompile> {
 application {
     mainClass.set( "de.vkoop.pdfutils.AppKt")
 }
+
+tasks.test {
+    // Use the built-in JUnit support of Gradle.
+    useJUnitPlatform()
+}
