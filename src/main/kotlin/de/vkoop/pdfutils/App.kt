@@ -3,11 +3,12 @@ package de.vkoop.pdfutils
 import com.lowagie.text.Document
 import com.lowagie.text.pdf.PdfReader
 import com.lowagie.text.pdf.PdfSmartCopy
+import picocli.CommandLine
 import picocli.CommandLine.*
 import java.io.FileOutputStream
 
 fun main(args: Array<String>) {
-    run(PdfMerge(), System.out, *args)
+    CommandLine(PdfMerge()).execute(*args)
 }
 
 enum class MergeMode {
