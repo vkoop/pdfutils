@@ -36,19 +36,21 @@ class PdfMerge : Runnable {
     @Option(names = ["-o"], required = true)
     lateinit var outFile: String
 
-    private fun combine(combineFun : (List<Pair<Int,PdfReader>>, List<Pair<Int,PdfReader>>) -> List<Pair<Int,PdfReader>>) {
-        val pageOrderList = combineFun(createPageReaderList(file1, reverseFile1), createPageReaderList(file2, reverseFile2))
+    private fun combine(combineFun: (List<Pair<Int, PdfReader>>, List<Pair<Int, PdfReader>>) -> List<Pair<Int, PdfReader>>) {
+        val pageOrderList =
+            combineFun(createPageReaderList(file1, reverseFile1), createPageReaderList(file2, reverseFile2))
 
-        val outDocument = Document()
-        val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
-        smartCopy.compressionLevel = 9
+        Document().use { outDocument ->
+            val smartCopy = PdfSmartCopy(outDocument, FileOutputStream(outFile))
+            smartCopy.compressionLevel = 9
+            outDocument.open()
 
-        outDocument.open()
+            pageOrderList.map { (page, reader) -> smartCopy.getImportedPage(reader, page) }
+                .forEach(smartCopy::addPage)
 
-        pageOrderList.map { (page, reader) -> smartCopy.getImportedPage(reader, page) }
-                .forEach (smartCopy::addPage)
+            smartCopy.close()
+        }
 
-        smartCopy.close()
     }
 
     private fun createPageReaderList(fileName: String, reversed: Boolean): List<Pair<Int, PdfReader>> {
