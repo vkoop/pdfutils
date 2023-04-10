@@ -25,7 +25,7 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("com.github.librepdf:openpdf:1.3.30")
-    implementation("info.picocli:picocli:4.7.1")
+    implementation("info.picocli:picocli:4.7.2")
 }
 
 kotlin {
