@@ -29,9 +29,7 @@ dependencies {
 }
 
 kotlin {
-
-    // For example:
-    jvmToolchain(8)
+    jvmToolchain(17)
 }
 
 application {
