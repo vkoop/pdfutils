@@ -5,7 +5,7 @@ plugins {
 
     kotlin("jvm") version kotlinVersion
 
-    id("com.github.ben-manes.versions") version "0.47.0"
+    id("com.github.ben-manes.versions") version "0.48.0"
 }
 
 group = "de.vkoop"
