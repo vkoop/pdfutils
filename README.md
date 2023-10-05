@@ -1,6 +1,4 @@
 # PDF Utils
-[![Build Status](https://travis-ci.org/vkoop/pdfutils.svg?branch=master)](https://travis-ci.org/vkoop/pdfutils)
-
 Cli tool to concat and merge pdf files.
 
 ## Why?
