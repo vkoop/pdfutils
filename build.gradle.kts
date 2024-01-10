@@ -22,7 +22,7 @@ distributions {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("com.github.librepdf:openpdf:1.3.35")
+    implementation("com.github.librepdf:openpdf:1.3.36")
     implementation("info.picocli:picocli:4.7.5")
 }
 
