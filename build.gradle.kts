@@ -19,11 +19,14 @@ distributions {
     }
 }
 
+val picoliVersion : String by project
+val openpdfVersion : String by project
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("com.github.librepdf:openpdf:1.3.40")
-    implementation("info.picocli:picocli:4.7.5")
+    implementation("com.github.librepdf:openpdf:$openpdfVersion")
+    implementation("info.picocli:picocli:$picoliVersion")
 }
 
 kotlin {
